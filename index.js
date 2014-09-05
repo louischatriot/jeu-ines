@@ -1,5 +1,6 @@
 var express = require('express')
   , app = express()
+  , game = require('lib/game')
   ;
 
 app.get('/', function (req, res) {
