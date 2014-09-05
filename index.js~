@@ -1,12 +1,29 @@
 var express = require('express')
   , app = express()
+  , game = require('./lib/game')
+  , bodyParser = require('body-parser')
   ;
 
+app.use(bodyParser.json());
+
 app.get('/', function (req, res) {
-  console.log('===============');
   res.send("Hello world");
 });
 
+
+// Question creation page
+app.get('/add-question', function (req, res) {
+  res.sendFile(process.cwd() + '/pages/add-question.html');
+});
+
+// Actual question creation
+app.post('/add-question', game.addQuestion);
+
+
+// Serve static client-side js and css (should really be done through Nginx but at this scale we don't care)
+app.get('/assets/*', function (req, res) {
+  res.sendFile(process.cwd() + req.url);
+});
 
 
 
