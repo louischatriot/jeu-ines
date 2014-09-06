@@ -25,6 +25,7 @@ app.get('/assets/*', function (req, res) {
   res.sendFile(process.cwd() + req.url);
 });
 
+console.log("=============aaaa===");
 
 
 app.listen(1504);
