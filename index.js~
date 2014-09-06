@@ -1,6 +1,8 @@
 var express = require('express')
   , app = express()
-  , game = require('./lib/game')
+  , server = require('http').Server(app)
+  , io = require('socket.io')(server)
+  , game = require('./lib/game')(io)
   , bodyParser = require('body-parser')
   ;
 
@@ -25,7 +27,6 @@ app.get('/assets/*', function (req, res) {
   res.sendFile(process.cwd() + req.url);
 });
 
-console.log("=============aaaa===");
 
 
-app.listen(1504);
+server.listen(1504);

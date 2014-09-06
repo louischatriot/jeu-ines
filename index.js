@@ -1,6 +1,8 @@
 var express = require('express')
   , app = express()
-  , game = require('./lib/game')
+  , server = require('http').Server(app)
+  , io = require('socket.io')(server)
+  , game = require('./lib/game')(io)
   , bodyParser = require('body-parser')
   ;
 
@@ -20,6 +22,12 @@ app.get('/add-question', function (req, res) {
 app.post('/add-question', game.addQuestion);
 
 
+// Play
+app.get('/play', function (req, res) {
+  res.sendFile(process.cwd() + '/pages/play.html');
+});
+
+
 // Serve static client-side js and css (should really be done through Nginx but at this scale we don't care)
 app.get('/assets/*', function (req, res) {
   res.sendFile(process.cwd() + req.url);
@@ -27,4 +35,4 @@ app.get('/assets/*', function (req, res) {
 
 
 
-app.listen(1504);
+server.listen(1504);
