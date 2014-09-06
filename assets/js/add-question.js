@@ -1,5 +1,5 @@
 ﻿// Send question data, warn user when ok and empty fields
-$('#create').on('click', function () {
+$('#create-question').on('submit', function (event) {
   var question = { question: $('#question').val()
                  , answerA: $('#answer-a').val()
                  , answerB: $('#answer-b').val()
@@ -7,6 +7,7 @@ $('#create').on('click', function () {
                  , answerD: $('#answer-d').val()
                  };
 
+  event.preventDefault();
 
   $.ajax({ url: '/add-question'
          , type: 'POST'
@@ -33,3 +34,7 @@ $('#create').on('click', function () {
          }
          });
 });
+
+
+
+

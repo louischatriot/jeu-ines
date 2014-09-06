@@ -8,10 +8,6 @@ var express = require('express')
 
 app.use(bodyParser.json());
 
-app.get('/', function (req, res) {
-  res.send("Hello world");
-});
-
 
 // Question creation page
 app.get('/add-question', function (req, res) {
@@ -23,9 +19,17 @@ app.post('/add-question', game.addQuestion);
 
 
 // Play
-app.get('/play', function (req, res) {
+app.get('/', function (req, res) {
   res.sendFile(process.cwd() + '/pages/play.html');
 });
+
+// Game master
+app.get('/master', function (req, res) {
+  res.sendFile(process.cwd() + '/pages/master.html');
+});
+
+// Next question
+app.post('/master/next-question', game.beginNextQuestion);
 
 
 // Serve static client-side js and css (should really be done through Nginx but at this scale we don't care)
