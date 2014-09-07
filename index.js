@@ -17,7 +17,6 @@ app.get('/add-question', function (req, res) {
 // Actual question creation
 app.post('/add-question', game.addQuestion);
 
-
 // Play
 app.get('/', function (req, res) {
   res.sendFile(process.cwd() + '/pages/play.html');
@@ -31,6 +30,8 @@ app.get('/master', function (req, res) {
 // Next question
 app.post('/master/next-question', game.beginNextQuestion);
 
+// Get player, create him if he doesn't exist yet
+app.get('/player/:id?', game.getPlayer);
 
 // Serve static client-side js and css (should really be done through Nginx but at this scale we don't care)
 app.get('/assets/*', function (req, res) {

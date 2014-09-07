@@ -1,6 +1,6 @@
 ﻿console.log("Beginning play - Initializing data");
-if (!localStorage.myAnswers) { localStorage.myAnswers = {}; }
-if (!localStorage.goodAnswers) { localStorage.goodAnswers = {}; }
+if (!localStorage.getItem('myAnswers')) { localStorage.setItem('myAnswers', {}); }
+if (!localStorage.getItem('goodAnswers')) { localStorage.setItem('goodAnswers', {}); }
 
 var currentQuestion = null
   , currentState = 'NOT_STARTED'
@@ -8,10 +8,30 @@ var currentQuestion = null
   , actions = {}
   ;
 
+
+// Asynchronous function which ensures this player is logged and recorded in the database
+// If he's not, API gets called, creates a new player and sends back the id
+// Of course nothing is secured in this kind of environment
+// callback signature: (err, playerId)
+function ensurePlayerIsLogged (cb) {
+  var callback = cb || function () {};
+
+  console.log('INFO - Ensuring player is logged');
+
+  if (localStorage.getItem('playerId')) {
+    $.ajax({ url: '/player/' + localStorage.getItem('playerId') });
+  } else {
+    $.ajax({ url: '/player/' });
+  }
+  
+
+}
+
+
 actions['NOT_STARTED'] = function (data) {
   $('#display-pannel').html($('#not-started').html());
+  ensurePlayerIsLogged();
 };
-
 
 
 actions['QUESTION_ASKED'] = function (data) {
@@ -21,8 +41,7 @@ actions['QUESTION_ASKED'] = function (data) {
 
 
 socket.on('game.status', function (data) {
-  console.log("======================");
-  console.log("Received new status");
+  console.log("INFO - Received new status");
   console.log(data);
   actions[data.currentStatus](data);
 });
