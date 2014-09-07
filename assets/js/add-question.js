@@ -5,6 +5,10 @@ $('#create-question').on('submit', function (event) {
                  , answerB: $('#answer-b').val()
                  , answerC: $('#answer-c').val()
                  , answerD: $('#answer-d').val()
+                 , answerAValid: $('#answer-a-valid').is(':checked')
+                 , answerBValid: $('#answer-b-valid').is(':checked')
+                 , answerCValid: $('#answer-c-valid').is(':checked')
+                 , answerDValid: $('#answer-d-valid').is(':checked')
                  };
 
   event.preventDefault();
@@ -21,6 +25,9 @@ $('#create-question').on('submit', function (event) {
               $('#feedback').html("La question a bien été rajoutée");
               ['#question', '#answer-a', '#answer-b', '#answer-c', '#answer-d'].forEach(function (id) {
                 $(id).val("");
+              });
+              ['#answer-a-valid', '#answer-b-valid', '#answer-c-valid', '#answer-d-valid'].forEach(function (id) {
+                $(id).removeAttr('checked');
               });
             } else {
               $('#feedback').attr('class', 'message-problem');

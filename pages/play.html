@@ -18,7 +18,10 @@
 <!-- Question was just asked -->
 <div id="question-asked" style="display: none;">
   <h1>Nouvelle question posée</h1><br>
-  {{question.question}}
+  {{question.question}}<br><br>
+  {{#question.answers}}
+  {{letter}}: {{text}}<br>
+  {{/question.answers}}
 </div>
 
 
