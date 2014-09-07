@@ -1,3 +1,16 @@
 ﻿body {
   background-color: #ccc;
 }
+
+
+.answer {
+  width: 300px;
+  height: 80px;
+  border: 1px solid black;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+.selected {
+  background-color: gold;
+}
