@@ -9,3 +9,15 @@ $('#next-question').on('click', function () {
          , contentType: 'application/json'
          });
 });
+
+
+
+
+$('#hold').on('click', function () {
+  $.ajax({ url: '/master/hold'
+         , type: 'POST'
+         , data: {}
+         , dataType: 'json'
+         , contentType: 'application/json'
+         });
+});

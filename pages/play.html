@@ -20,7 +20,7 @@
   <h1>Nouvelle question posée</h1><br>
   {{question.question}}<br><br>
   {{#question.answers}}
-    <div class="answer">{{letter}}: {{text}}</div><br>
+  <div class="answer" data-letter="{{letter}}">{{letter}}: {{text}}</div><br>
   {{/question.answers}}
 </div>
 

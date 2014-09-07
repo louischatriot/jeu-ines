@@ -1,12 +1,49 @@
 ﻿console.log("Beginning play - Initializing data");
-if (!localStorage.getItem('myAnswers')) { localStorage.setItem('myAnswers', {}); }
-if (!localStorage.getItem('goodAnswers')) { localStorage.setItem('goodAnswers', {}); }
 
 var currentQuestion = null
   , currentState = 'NOT_STARTED'
   , socket = io()
   , actions = {}
   ;
+
+// For recording my and the correct answers I should really be using
+// A client side DB such as NeDB but this will be faster to implement
+
+// Format for my answers: key, values where key is number and value is answer
+function recordMyAnswer (number, letter) {
+  if (!localStorage.getItem('myAnswers')) { localStorage.setItem('myAnswers', '{}'); }
+
+  var myAnswers = JSON.parse(localStorage.getItem('myAnswers'));
+  myAnswers[number] = letter;
+  localStorage.setItem('myAnswers', JSON.stringify(myAnswers));
+}
+
+// Format for correct answers: key, value where key is id formed from number and letter
+// and value true or false depending on correctness, allowing for multiple right answers
+function recordGoodAnswers (number, answers) {
+  if (!localStorage.getItem('goodAnswers')) { localStorage.setItem('goodAnswers', '{}'); }
+
+  var goodAnswers = JSON.parse(localStorage.getItem('goodAnswers'));
+
+  ['A', 'B', 'C', 'D'].forEach(function (letter) {
+    goodAnswers['' + number + letter] = answers[letter] ? true : false;
+  });
+  localStorage.setItem('goodAnswers', JSON.stringify(goodAnswers));
+}
+
+function isAnswerGood (number) {
+  if (!localStorage.getItem('myAnswers')) { localStorage.setItem('myAnswers', '{}'); }
+  if (!localStorage.getItem('goodAnswers')) { localStorage.setItem('goodAnswers', '{}'); }
+
+  var myAnswers = JSON.parse(localStorage.getItem('myAnswers'))
+    , goodAnswers = JSON.parse(localStorage.getItem('goodAnswers'))
+    ;
+
+  if (!myAnswers[number]) { return false; }
+  return goodAnswers['' + number + myAnswers[number]] ? true : false;
+}
+
+
 
 
 // Asynchronous function which ensures this player is logged and recorded in the database
@@ -45,13 +82,37 @@ actions['NOT_STARTED'] = function (data) {
 
 
 actions['QUESTION_ASKED'] = function (data) {
-  var templateData = { question: data.currentQuestion };
-  $('#display-pannel').html(Mustache.render($('#question-asked').html(), templateData));
-  $('#display-pannel .answer').on('click', function (event) {
-    var $target = $(event.target);
-    $('#display-pannel .answer').removeClass('selected');
-    $target.addClass('selected');
+  ensurePlayerIsLogged(function () {
+    currentQuestion = data.currentQuestion;
+    var templateData = { question: currentQuestion };
+    $('#display-pannel').html(Mustache.render($('#question-asked').html(), templateData));
+
+    $('#display-pannel .answer').on('click', function (event) {
+      var $target = $(event.target);
+      $('#display-pannel .answer').removeClass('selected');
+      $target.addClass('selected');
+
+      // Cache my answer for this question
+      recordMyAnswer(currentQuestion.number, $target.data('letter'));
+
+      // Send selected answer back to the server
+      // Client and server are now in sync
+      $.ajax({ url: '/answer/' + currentQuestion.number
+             , type: 'POST'
+             , dataType: 'json'
+             , contentType: 'application/json'
+             , data: JSON.stringify({ playerId: localStorage.getItem('playerId')
+                                    , answer: $target.data('letter')
+                                    })
+             });
+
+    });
   });
+};
+
+
+actions['HOLD'] = function (data) {
+  $('#display-pannel .answer').off('click');
 };
 
 
@@ -60,12 +121,4 @@ socket.on('game.status', function (data) {
   console.log(data);
   actions[data.currentStatus](data);
 });
-
-
-
-
-
-
-
-
 

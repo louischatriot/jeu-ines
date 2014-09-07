@@ -17,6 +17,9 @@ app.get('/master', function (req, res) {
 // Next question
 app.post('/master/next-question', game.beginNextQuestion);
 
+// Hold game
+app.post('/master/hold', game.hold);
+
 // Question creation page
 app.get('/add-question', function (req, res) {
   res.sendFile(process.cwd() + '/pages/add-question.html');
@@ -42,6 +45,12 @@ app.get('/assets/*', function (req, res) {
   res.sendFile(process.cwd() + req.url);
 });
 
+
+// Last wall of defense
+process.on('uncaughtException', function (err) {
+  console.log('UNCAUGHT EXCEPTION !!!');
+  console.log(err);
+});
 
 
 server.listen(1504);
