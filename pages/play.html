@@ -1,17 +1,31 @@
-<!doctype html>
+﻿<!doctype html>
 <html>
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <link rel="stylesheet" href="assets/css/add-question.css" />
-  <title>Qui veut gagner des millions ? - In�s edition</title>
+  <link rel="stylesheet" href="assets/css/play.css" />
+  <title>Qui veut gagner des millions ? - Inès edition</title>
 </head>
 <body>
 
+<!-- Active pannel showing game state -->
+<div id="display-pannel"></div>
 
-<script type="text/javascript" src="assets/js/jquery-1.11.1.min.js"></script>
+<!-- Game not started -->
+<div id="not-started" style="display: none;">
+  <h1>Le jeu n'a pas encore commencé</h1>
+</div>
+
+<!-- Question was just asked -->
+<div id="question-asked" style="display: none;">
+  <h1>Nouvelle question posée</h1><br>
+  {{question.question}}
+</div>
+
+
+<script type="text/javascript" src="/assets/js/jquery-1.11.1.min.js"></script>
 <script src="/socket.io/socket.io.js"></script>
-<script type="text/javascript" src="assets/js/play.js"></script>
-
+<script src="/assets/js/mustache.min.js"></script>
+<script type="text/javascript" src="/assets/js/play.js"></script>
 
 </body>
 </html>
