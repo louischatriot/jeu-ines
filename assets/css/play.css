@@ -1,5 +1,7 @@
 ﻿body {
-  background-color: #ccc;
+  background-color: #E0ADEB;
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 15px;
 }
 
 .viewport {
@@ -8,6 +10,12 @@
   bottom: 0px;
   left: 0px;
   right: 0px
+}
+
+.letter {
+  color: gold;
+  font-weight: bold;
+  font-size: 18px;
 }
 
 .table {
