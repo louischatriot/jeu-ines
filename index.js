@@ -23,6 +23,9 @@ app.post('/master/next-question', game.beginNextQuestion);
 // Hold game
 app.post('/master/hold', game.hold);
 
+// Get score for question
+app.get('/master/score/:number', game.sendScoreForQuestion);
+
 // Question creation page
 app.get('/add-question', function (req, res) {
   res.sendFile(process.cwd() + '/pages/add-question.html');

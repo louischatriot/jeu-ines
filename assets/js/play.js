@@ -11,9 +11,12 @@ var currentQuestion = null
 
 // Format for my answers: key, values where key is number and value is answer
 function recordMyAnswer (number, letter) {
-  if (!localStorage.getItem('myAnswers')) { localStorage.setItem('myAnswers', '{}'); }
-
-  var myAnswers = JSON.parse(localStorage.getItem('myAnswers'));
+  var myAnswers;
+  try {
+    myAnswers = JSON.parse(localStorage.getItem('myAnswers'));
+  } catch (e) {
+    myAnswers = {};
+  }
   myAnswers[number] = letter;
   localStorage.setItem('myAnswers', JSON.stringify(myAnswers));
 }
@@ -21,10 +24,12 @@ function recordMyAnswer (number, letter) {
 // Format for correct answers: key, value where key is id formed from number and letter
 // and value true or false depending on correctness, allowing for multiple right answers
 function recordGoodAnswers (number, answers) {
-  if (!localStorage.getItem('goodAnswers')) { localStorage.setItem('goodAnswers', '{}'); }
-
-  var goodAnswers = JSON.parse(localStorage.getItem('goodAnswers'));
-
+  var goodAnswers;
+  try {
+    goodAnswers = JSON.parse(localStorage.getItem('goodAnswers'));
+  } catch (e) {
+    goodAnswers = {};
+  }
   ['A', 'B', 'C', 'D'].forEach(function (letter) {
     goodAnswers['' + number + letter] = answers[letter] ? true : false;
   });
