@@ -17,7 +17,7 @@
     "underscore": "^1.7.0"
   },
   "scripts": {
-    "test": "./node_modules/.bin/mocha --reporter spec --timeout 10000"
+    "launch": "supervisor --ignore pages,assets index.js"
   },
   "main": "index",
   "licence": "MIT"

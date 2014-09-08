@@ -17,7 +17,8 @@ function recordMyAnswer (number, letter) {
   } catch (e) {
     myAnswers = {};
   }
-  myAnswers[number] = letter;
+  if (!myAnswers || typeof myAnswers !== 'object') { myAnswers = {}; }
+  myAnswers[number.toString()] = letter;
   localStorage.setItem('myAnswers', JSON.stringify(myAnswers));
 }
 
@@ -30,6 +31,7 @@ function recordGoodAnswers (number, answers) {
   } catch (e) {
     goodAnswers = {};
   }
+  if (!goodAnswers || typeof goodAnswers !== 'object') { goodAnswers = {}; }
   ['A', 'B', 'C', 'D'].forEach(function (letter) {
     goodAnswers['' + number + letter] = answers[letter] ? true : false;
   });
@@ -37,14 +39,20 @@ function recordGoodAnswers (number, answers) {
 }
 
 function isAnswerGood (number) {
-  if (!localStorage.getItem('myAnswers')) { localStorage.setItem('myAnswers', '{}'); }
-  if (!localStorage.getItem('goodAnswers')) { localStorage.setItem('goodAnswers', '{}'); }
+  var myAnswers, goodAnswers;
 
-  var myAnswers = JSON.parse(localStorage.getItem('myAnswers'))
-    , goodAnswers = JSON.parse(localStorage.getItem('goodAnswers'))
-    ;
+  try {
+    myAnswers = JSON.parse(localStorage.getItem('myAnswers'))
+    goodAnswers = JSON.parse(localStorage.getItem('goodAnswers'))
+  } catch (e) {
+    return false;   // Consider that if we don't have the right answers for this question ours is false
+  }
+  // If answers could not be parsed as objects, that means that don't have the expected format
+  // Meaning this was called before answers were set, so we must be wrong (and actually that shouldn't even happen)
+  if (!myAnswers || typeof myAnswers !== 'object') { return false; }
+  if (!goodAnswers || typeof goodAnswers !== 'object') { return false; }
 
-  if (!myAnswers[number]) { return false; }
+  if (!myAnswers[number]) { return false; }   // No answer means wrong
   return goodAnswers['' + number + myAnswers[number]] ? true : false;
 }
 
