@@ -102,7 +102,7 @@ actions['QUESTION_ASKED'] = function (data) {
     $('#display-pannel').html(Mustache.render($('#question-asked').html(), templateData));
 
     $('#display-pannel .answer').on('click', function (event) {
-      var $target = $(event.target).parent();
+      var $target = $(event.target).closest('.answer');
       $('#display-pannel .answer').removeClass('selected');
       $target.addClass('selected');
 
