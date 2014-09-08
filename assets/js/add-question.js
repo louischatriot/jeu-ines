@@ -13,7 +13,7 @@ $('#create-question').on('submit', function (event) {
 
   event.preventDefault();
 
-  $.ajax({ url: '/add-question'
+  $.ajax({ url: '/master/add-question'
          , type: 'POST'
          , data: JSON.stringify(question)
          , dataType: 'json'

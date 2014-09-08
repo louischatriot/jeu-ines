@@ -27,12 +27,12 @@ app.post('/master/hold', game.hold);
 app.get('/master/score/:number', game.sendScoreForQuestion);
 
 // Question creation page
-app.get('/add-question', function (req, res) {
+app.get('/master/add-question', function (req, res) {
   res.sendFile(process.cwd() + '/pages/add-question.html');
 });
 
 // Actual question creation
-app.post('/add-question', game.addQuestion);
+app.post('/master/add-question', game.addQuestion);
 
 // Play
 app.get('/', function (req, res) {

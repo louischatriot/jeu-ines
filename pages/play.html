@@ -18,8 +18,9 @@
 <!-- Question was just asked -->
 <div id="question-asked" style="display: none;">
   <div class="viewport">
-    <h1>Nouvelle question posée</h1><br>
-    {{question.question}}
+    <div class="question-title">
+    Q{{question.number}} - {{question.question}}
+    </div>
 
     {{#question.answers}}
       <div class="answer answer-{{letter}}" data-letter="{{letter}}">
@@ -27,7 +28,7 @@
         <div class="cartridge-center">
           <div class="table">
           <div class="cartridge-center-inner">
-            <span class="letter">{{letter}} : </span>{{text}}
+            <span class="letter">{{letter}} : </span><span class="text">{{text}}</span>
           </div>
           </div>
         </div>

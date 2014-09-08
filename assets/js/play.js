@@ -88,6 +88,24 @@ function ensurePlayerIsLogged (cb) {
 }
 
 
+// Changing state of one or several cartridge, between unselected, selected, good and bad
+function changeCartridgeDisplay ($cartridge, prefix, letterColor, textColor) {
+  $cartridge.find('.letter').css('color', letterColor);
+  $cartridge.find('.text').css('color', textColor);
+  $cartridge.find('.cartridge-left').css('background-image', "url('/assets/img/" + prefix + "left.png')");
+  $cartridge.find('.cartridge-center').css('background-image', "url('/assets/img/" + prefix + "center.png')");
+  $cartridge.find('.cartridge-right').css('background-image', "url('/assets/img/" + prefix + "right.png')");
+}
+
+function changeToSelected ($cartridge) {
+  changeCartridgeDisplay($cartridge, 'selected-', '#fff', '#000');
+}
+
+function changeToUnselected ($cartridge) {
+  changeCartridgeDisplay($cartridge, '', 'gold', '#fff');
+}
+
+
 actions['NOT_STARTED'] = function (data) {
   currentQuestion = null;
   $('#display-pannel').html($('#not-started').html());
@@ -103,8 +121,12 @@ actions['QUESTION_ASKED'] = function (data) {
 
     $('#display-pannel .answer').on('click', function (event) {
       var $target = $(event.target).closest('.answer');
+
       $('#display-pannel .answer').removeClass('selected');
+      changeToUnselected($('#display-pannel .answer'));
+
       $target.addClass('selected');
+      changeToSelected($target);
 
       // Cache my answer for this question
       recordMyAnswer(currentQuestion.number, $target.data('letter'));
