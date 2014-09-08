@@ -1,7 +1,7 @@
 ﻿console.log("Beginning play - Initializing data");
 
 var currentQuestion = null
-  , currentState = 'NOT_STARTED'
+  , currentStatus = 'NOT_STARTED'
   , socket = io()
   , actions = {}
   ;
@@ -76,6 +76,7 @@ function ensurePlayerIsLogged (cb) {
 
 
 actions['NOT_STARTED'] = function (data) {
+  currentQuestion = null;
   $('#display-pannel').html($('#not-started').html());
   ensurePlayerIsLogged();
 };
@@ -119,6 +120,7 @@ actions['HOLD'] = function (data) {
 socket.on('game.status', function (data) {
   console.log("INFO - Received new status");
   console.log(data);
+  currentStatus = data.currentStatus;
   actions[data.currentStatus](data);
 });
 

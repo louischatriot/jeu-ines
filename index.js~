@@ -17,8 +17,7 @@ app.get('/master', function (req, res) {
 // Next question
 app.post('/master/next-question', game.beginNextQuestion);
 
-
-// Next question
+// Hold game
 app.post('/master/hold', game.hold);
 
 // Question creation page

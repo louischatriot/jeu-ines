@@ -7,10 +7,21 @@
 </head>
 <body>
 
-<input type="button" value="Question suivante" id="next-question"><br>
+<div id="question-number"></div><br><br>
+
+<input type="button" value="Repartie au début" id="reset-game"><br><br>
+<input type="button" value="Question suivante" id="next-question"><br><br>
 <input type="button" value="C'était notre dernier mot" id="hold">
 
-<script type="text/javascript" src="assets/js/jquery-1.11.1.min.js"></script>
+<br><br><br><br>
+
+<div id="results">
+
+</div>
+
+
+<script type="text/javascript" src="assets/js/zepto.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
 <script type="text/javascript" src="assets/js/master.js"></script>
 
 

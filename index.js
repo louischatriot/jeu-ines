@@ -14,6 +14,9 @@ app.get('/master', function (req, res) {
   res.sendFile(process.cwd() + '/pages/master.html');
 });
 
+// Reset game
+app.post('/master/reset-game', game.resetGame);
+
 // Next question
 app.post('/master/next-question', game.beginNextQuestion);
 
