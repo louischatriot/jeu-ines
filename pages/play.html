@@ -17,11 +17,24 @@
 
 <!-- Question was just asked -->
 <div id="question-asked" style="display: none;">
-  <h1>Nouvelle question posée</h1><br>
-  {{question.question}}<br><br>
-  {{#question.answers}}
-  <div class="answer" data-letter="{{letter}}">{{letter}}: {{text}}</div><br>
-  {{/question.answers}}
+  <div class="viewport">
+    <h1>Nouvelle question posée</h1><br>
+    {{question.question}}
+
+    {{#question.answers}}
+      <div class="answer answer-{{letter}}" data-letter="{{letter}}">
+        <div class="cartridge-left"></div>
+        <div class="cartridge-center">
+          <div class="table">
+          <div class="cartridge-center-inner">
+            {{letter}}: {{text}}
+          </div>
+          </div>
+        </div>
+        <div class="cartridge-right"></div>
+      </div>
+    {{/question.answers}}
+  </div>
 </div>
 
 
