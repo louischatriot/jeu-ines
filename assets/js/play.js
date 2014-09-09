@@ -4,6 +4,7 @@ var currentQuestion = null
   , currentStatus = 'NOT_STARTED'
   , socket = io()
   , actions = {}
+  , somethingShown = false   // Make sure a screen is always shown regardless of server state
   ;
 
 // For recording my and the correct answers I should really be using
@@ -138,7 +139,9 @@ actions['NOT_STARTED'] = function () {
 };
 
 
-actions['QUESTION_ASKED'] = function (data) {
+actions['QUESTION_ASKED'] = function (data, cb) {
+  var callback = cb || function () {};
+
   console.log("=====================");
   console.log("=====================");
   console.log(data.currentQuestion);
@@ -148,6 +151,7 @@ actions['QUESTION_ASKED'] = function (data) {
     currentQuestion = data.currentQuestion;
     var templateData = { question: currentQuestion };
     $('#display-pannel').html(Mustache.render($('#question-asked').html(), templateData));
+    somethingShown = true;
 
     if (getMyAnswers()[currentQuestion.number]) {
       changeToSelected($('.answer-' + getMyAnswers()[currentQuestion.number]));
@@ -174,18 +178,37 @@ actions['QUESTION_ASKED'] = function (data) {
              });
 
     });
+
+    callback();
   });
 };
 
 
 actions['HOLD'] = function (data) {
-  $('#display-pannel .answer').off('click');
+  function hold () {
+    $('#display-pannel .answer').off('click');
+    // TODO: Hold code here
+  }
+
+  if (!somethingShown) {
+    actions['QUESTION_ASKED'](data, hold);
+  } else {
+    hold();
+  }
 };
 
 
 actions['SHOW_RESULT'] = function (data) {
-  changeToWrong($('.selected'));
-  changeToCorrect($('.valid'));
+  function showResult () {
+    changeToWrong($('.selected'));
+    changeToCorrect($('.valid'));
+  }
+
+  if (!somethingShown) {
+    actions['QUESTION_ASKED'](data, showResult);
+  } else {
+    showResult();
+  }
 };
 
 
