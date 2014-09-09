@@ -34,12 +34,22 @@ function getGoodAnswers () {
   return goodAnswers;
 }
 
+// Given a myAnswers object, save it to local storage
+function setMyAnswers (myAnswers) {
+  localStorage.setItem('myAnswers', JSON.stringify(myAnswers));
+}
+
+// Given a goodAnswers object, save it to local storage
+function setGoodAnswers (goodAnswers) {
+  localStorage.setItem('goodAnswers', JSON.stringify(goodAnswers));
+}
+
 
 // Format for my answers: key, values where key is number and value is answer
 function recordMyAnswer (number, letter) {
   var myAnswers = getMyAnswers();
   myAnswers[number.toString()] = letter;
-  localStorage.setItem('myAnswers', JSON.stringify(myAnswers));
+  setMyAnswers(myAnswers);
 }
 
 // Format for correct answers: key, value where key is id formed from number and letter
@@ -49,7 +59,7 @@ function recordGoodAnswers (number, answers) {
   ['A', 'B', 'C', 'D'].forEach(function (letter) {
     goodAnswers['' + number + letter] = answers[letter] ? true : false;
   });
-  localStorage.setItem('goodAnswers', JSON.stringify(goodAnswers));
+  setGoodAnswers(goodAnswers);
 }
 
 function isMyAnswerCorrect (number) {
@@ -121,7 +131,7 @@ function changeToWrong ($cartridge) {
 }
 
 
-actions['NOT_STARTED'] = function (data) {
+actions['NOT_STARTED'] = function () {
   currentQuestion = null;
   $('#display-pannel').html($('#not-started').html());
   ensurePlayerIsLogged();
@@ -165,6 +175,13 @@ actions['QUESTION_ASKED'] = function (data) {
 
 actions['HOLD'] = function (data) {
   $('#display-pannel .answer').off('click');
+};
+
+
+actions['RESET'] = function () {
+  setMyAnswers({});
+  setGoodAnswers({});
+  actions['NOT_STARTED']();
 };
 
 
