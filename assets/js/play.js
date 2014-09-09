@@ -105,6 +105,14 @@ function changeToUnselected ($cartridge) {
   changeCartridgeDisplay($cartridge, '', 'gold', '#fff');
 }
 
+function changeToCorrect ($cartridge) {
+  changeCartridgeDisplay($cartridge, 'correct-', '#fff', '#000');
+}
+
+function changeToWrong ($cartridge) {
+  changeCartridgeDisplay($cartridge, 'wrong-', 'gold', '#fff');
+}
+
 
 actions['NOT_STARTED'] = function (data) {
   currentQuestion = null;
