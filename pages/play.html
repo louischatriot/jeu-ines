@@ -23,7 +23,7 @@
     </div>
 
     {{#question.answers}}
-      <div class="answer answer-{{letter}}" data-letter="{{letter}}">
+      <div class="answer answer-{{letter}}{{#valid}} valid{{/valid}}" data-letter="{{letter}}">
         <div class="cartridge-left"></div>
         <div class="cartridge-center">
           <div class="table">

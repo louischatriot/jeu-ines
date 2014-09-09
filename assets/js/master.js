@@ -69,12 +69,12 @@ $('#next-question').on('click', function () {
 
 $('#hold').on('click', function () {
   // Hold the game for all players
-  //$.ajax({ url: '/master/hold'
-         //, type: 'POST'
-         //, data: {}
-         //, dataType: 'json'
-         //, contentType: 'application/json'
-         //});
+  $.ajax({ url: '/master/hold'
+         , type: 'POST'
+         , data: {}
+         , dataType: 'json'
+         , contentType: 'application/json'
+         });
 
   // Get the score for the current question if there is one
   $.ajax({ url: '/master/score/' + currentQuestion.number
@@ -83,6 +83,16 @@ $('#hold').on('click', function () {
             console.log('------------------');
             console.log(results);
          }
+         });
+});
+
+
+$('#show-result').on('click', function () {
+  $.ajax({ url: '/master/show-result'
+         , type: 'POST'
+         , data: {}
+         , dataType: 'json'
+         , contentType: 'application/json'
          });
 });
 

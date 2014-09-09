@@ -139,6 +139,11 @@ actions['NOT_STARTED'] = function () {
 
 
 actions['QUESTION_ASKED'] = function (data) {
+  console.log("=====================");
+  console.log("=====================");
+  console.log(data.currentQuestion);
+
+
   ensurePlayerIsLogged(function () {
     currentQuestion = data.currentQuestion;
     var templateData = { question: currentQuestion };
@@ -175,6 +180,12 @@ actions['QUESTION_ASKED'] = function (data) {
 
 actions['HOLD'] = function (data) {
   $('#display-pannel .answer').off('click');
+};
+
+
+actions['SHOW_RESULT'] = function (data) {
+  changeToWrong($('.selected'));
+  changeToCorrect($('.valid'));
 };
 
 
