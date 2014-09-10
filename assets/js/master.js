@@ -1,4 +1,4 @@
-var socket = io()
+﻿var socket = io()
   , actions = {}
   , currentStatus = 'NOT_STARTED'
   , currentQuestion = null;
@@ -6,9 +6,9 @@ var socket = io()
 
 function updateQuestionTitle () {
   if (currentQuestion) {
-    $('#question-number').html('<h1>Question number ' + currentQuestion.number + '</h1>');
+    $('#title').html('Q' + currentQuestion.number + ' - ' + currentQuestion.question);
   } else {
-    $('#question-number').html('<h1>No question yet</h1>');
+    $('#title').html('Le jeu va bientôt commencer');
   }
 }
 
@@ -152,4 +152,13 @@ $('#next-state').on('click', function () {
 
 
 // Initialization
-updateQuestionNumber();
+updateQuestionTitle();
+
+var $pic = $('<img src="/assets/img/left.png">')
+$pic.css('height', $('#image').height() + 'px')
+
+$('#image').html($pic);
+
+
+
+

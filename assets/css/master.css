@@ -1,14 +1,56 @@
-body {
+﻿body {
   background-color: #eee;
   font-family: Verdana, Geneva, sans-serif;
   font-size: 15px;
+}
+
+#title {
+  position: fixed;
+  width: 70%;
+  left: 15%;
+  text-align: center;
+  font-size: 32px;
+}
+
+#next-state {
+  position: fixed;
+  width:  100px;
+  height: 100px;
+  top: 0px;
+  right: 0px;
+  background-color: lightgrey;
+  cursor: pointer;
+}
+
+.arrow-right {
+	width: 0; 
+	height: 0; 
+	border-top: 40px solid transparent;
+	border-bottom: 40px solid transparent;
+	border-left: 40px solid grey;
+  margin-top: 10px;
+  margin-left: 35px;
+}
+
+#image {
+  position: fixed;
+  border: 1px solid black;
+  top: 150px;
+  left: 0px;
+  right: 0px;
+  bottom: 300px;
+}
+
+#image img {
+  margin: 0 auto;
+  display: block;
 }
 
 #answers {
   position: fixed;
   left: 0px;
   right: 0px;
-  bottom: 300px;
+  bottom: 250px;
 }
 
 .letter {
@@ -75,11 +117,11 @@ body {
 }
 
 .answer-C {
-  top: 140px;
+  top: 110px;
 }
 
 .answer-D {
-  top: 140px;
+  top: 110px;
   left: 50%;
 }
 
