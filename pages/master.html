@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <link rel="stylesheet" href="assets/css/add-question.css" />
+  <link rel="stylesheet" href="assets/css/master.css" />
   <title>Gestion du jeu</title>
 </head>
 <body>
@@ -18,12 +18,51 @@
 <br><br><br><br>
 
 <div id="results">
+</div>
+
+<div id="answers">
 
 </div>
 
 
+
+<!-- What an ugly way to code this but no more time ... -->
+<div id="answers-section" style="display: none;">
+  {{#answersFirstRow}}
+    <div class="answer answer-{{letter}}{{#valid}} valid{{/valid}}" data-letter="{{letter}}">
+      <div class="cartridge-left"></div>
+      <div class="cartridge-center">
+        <div class="table">
+          <div class="cartridge-center-inner">
+            <span class="letter">{{letter}} : </span><span class="text">{{text}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="cartridge-right"></div>
+    </div>
+  {{/answersFirstRow}}
+
+  {{#answersSecondRow}}
+    <div class="answer answer-{{letter}}{{#valid}} valid{{/valid}}" data-letter="{{letter}}">
+      <div class="cartridge-left"></div>
+      <div class="cartridge-center">
+        <div class="table">
+          <div class="cartridge-center-inner">
+            <span class="letter">{{letter}} : </span><span class="text">{{text}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="cartridge-right"></div>
+    </div>
+  {{/answersSecondRow}}
+
+</div>
+
+
+
 <script type="text/javascript" src="assets/js/zepto.min.js"></script>
 <script src="/socket.io/socket.io.js"></script>
+<script src="/assets/js/mustache.min.js"></script>
 <script type="text/javascript" src="assets/js/master.js"></script>
 
 

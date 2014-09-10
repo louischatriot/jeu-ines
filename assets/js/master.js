@@ -4,7 +4,7 @@ var socket = io()
   , currentQuestion = null;
   ;
 
-function updateQuestionNumber () {
+function updateQuestionTitle () {
   if (currentQuestion) {
     $('#question-number').html('<h1>Question number ' + currentQuestion.number + '</h1>');
   } else {
@@ -13,15 +13,58 @@ function updateQuestionNumber () {
 }
 
 
+// Changing state of one or several cartridge, between unselected, selected, good and bad
+function changeCartridgeDisplay ($cartridge, prefix, letterColor, textColor) {
+  $cartridge.find('.letter').css('color', letterColor);
+  $cartridge.find('.text').css('color', textColor);
+  $cartridge.find('.cartridge-left').css('background-image', "url('/assets/img/" + prefix + "left.png')");
+  $cartridge.find('.cartridge-center').css('background-image', "url('/assets/img/" + prefix + "center.png')");
+  $cartridge.find('.cartridge-right').css('background-image', "url('/assets/img/" + prefix + "right.png')");
+}
+
+function changeToCorrect ($cartridge) {
+  changeCartridgeDisplay($cartridge, 'correct-', '#fff', '#000');
+}
+
+function changeToWrong ($cartridge) {
+  changeCartridgeDisplay($cartridge, 'wrong-', 'gold', '#fff');
+}
+
+
 // Get information
 actions['QUESTION_ASKED'] = function (data) {
+  var answersFirstRow = []
+    , answersSecondRow = []
+    , templateData = {}
+    ;
+
   currentQuestion = data.currentQuestion;
+
+  answersFirstRow.push(currentQuestion.answers[0]);
+  answersFirstRow.push(currentQuestion.answers[1]);
+  templateData.answersFirstRow = answersFirstRow;
+  answersSecondRow.push(currentQuestion.answers[2]);
+  answersSecondRow.push(currentQuestion.answers[3]);
+  templateData.answersSecondRow = answersSecondRow;
+
+  $('#answers').html(Mustache.render($('#answers-section').html(), templateData));
 };
 
 
-// Restart game
+actions['SHOW_RESULT'] = function (data) {
+  changeToCorrect($('.valid'));
+};
+
+
 actions['NOT_STARTED'] = function (data) {
   currentQuestion = null;
+  $('#answers').html('');
+};
+
+
+actions['RESET'] = function (data) {
+  currentQuestion = null;
+  $('#answers').html('');
 };
 
 
@@ -37,7 +80,7 @@ socket.on('game.status', function (data) {
   console.log(data);
   currentStatus = data.currentStatus;
   if (actions[data.currentStatus]) { actions[data.currentStatus](data); }
-  updateQuestionNumber();
+  updateQuestionTitle();
 });
 
 
