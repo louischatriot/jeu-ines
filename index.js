@@ -32,6 +32,9 @@ app.post('/master/next-state', game.nextState);
 // Get score for question
 app.get('/master/score/:number', game.sendScoreForQuestion);
 
+// Get highest score for the whole game
+app.get('/master/highest-score', game.getHighestScore);
+
 // Question creation page
 app.get('/master/add-question', function (req, res) {
   res.sendFile(process.cwd() + '/pages/add-question.html');
