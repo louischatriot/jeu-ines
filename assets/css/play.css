@@ -12,6 +12,22 @@
   right: 0px
 }
 
+.paragraph {
+  width: 100%;
+  text-align: justify;
+}
+
+.centered-paragraph {
+  width: 100%;
+  text-align: center;
+}
+
+.your-score {
+  color: gold;
+  font-weight: bold;
+  font-size: 48px;
+}
+
 .letter {
   color: gold;
   font-weight: bold;

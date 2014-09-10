@@ -53,13 +53,11 @@ function recordMyAnswer (number, letter) {
   setMyAnswers(myAnswers);
 }
 
-// Format for correct answers: key, value where key is id formed from number and letter
-// and value true or false depending on correctness, allowing for multiple right answers
-function recordGoodAnswers (number, answers) {
+// Record one answer
+// answer is a boolean indicating correctness
+function recordAnswer (number, letter, answer) {
   var goodAnswers = getGoodAnswers();
-  ['A', 'B', 'C', 'D'].forEach(function (letter) {
-    goodAnswers['' + number + letter] = answers[letter] ? true : false;
-  });
+  goodAnswers['' + number + letter] = answer ? true : false;
   setGoodAnswers(goodAnswers);
 }
 
@@ -142,16 +140,16 @@ actions['NOT_STARTED'] = function () {
 actions['QUESTION_ASKED'] = function (data, cb) {
   var callback = cb || function () {};
 
-  console.log("=====================");
-  console.log("=====================");
-  console.log(data.currentQuestion);
-
-
   ensurePlayerIsLogged(function () {
     currentQuestion = data.currentQuestion;
     var templateData = { question: currentQuestion };
     $('#display-pannel').html(Mustache.render($('#question-asked').html(), templateData));
     somethingShown = true;
+
+    // Record right answers
+    currentQuestion.answers.forEach(function (answer) {
+      recordAnswer(currentQuestion.number, answer.letter, answer.valid);
+    });
 
     if (getMyAnswers()[currentQuestion.number]) {
       changeToSelected($('.answer-' + getMyAnswers()[currentQuestion.number]));
@@ -187,7 +185,7 @@ actions['QUESTION_ASKED'] = function (data, cb) {
 actions['HOLD'] = function (data) {
   function hold () {
     $('#display-pannel .answer').off('click');
-    // TODO: Hold code here
+    // TODO: Hold specific display here
   }
 
   if (!somethingShown) {
@@ -219,10 +217,25 @@ actions['RESET'] = function () {
 };
 
 
+actions['ENDED'] = function (data) {
+  var templateData = {}
+    , i, score = 0
+    ;
+
+  for (i = 1; i <= data.questionsCount; i += 1) {
+    if (isMyAnswerCorrect(i)) { score += 1; }
+  }
+
+  templateData.score = score;
+  templateData.maxScore = data.questionsCount;
+  $('#display-pannel').html(Mustache.render($('#game-ended').html(), templateData));
+};
+
+
 socket.on('game.status', function (data) {
   console.log("INFO - Received new status");
   console.log(data);
   currentStatus = data.currentStatus;
-  actions[data.currentStatus](data);
+  if (actions[data.currentStatus]) { actions[data.currentStatus](data); }
 });
 
