@@ -113,3 +113,29 @@
 
 .selected {
 }
+
+.overlay {
+  opacity: 0.3;
+  background-color: lightcoral;
+  position: fixed;
+  top: 0px;
+  bottom: 0px;
+  right: 0px;
+  left: 0px;
+}
+
+.last-word-message {
+  opacity: 1;
+  text-align: center;
+  top: 0%;
+  position: fixed;
+  left: 0px;
+  right: 0px;
+  font-size: 34px;
+  background-color: lightcoral;
+  padding: 15px;
+}
+
+
+
+

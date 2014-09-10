@@ -185,7 +185,7 @@ actions['QUESTION_ASKED'] = function (data, cb) {
 actions['HOLD'] = function (data) {
   function hold () {
     $('#display-pannel .answer').off('click');
-    // TODO: Hold specific display here
+    $('#display-pannel').append($('#hold-panel').html());
   }
 
   if (!somethingShown) {
