@@ -26,6 +26,9 @@ app.post('/master/hold', game.hold);
 // Show question results
 app.post('/master/show-result', game.showResult);
 
+// Go to next state
+app.post('/master/next-state', game.nextState);
+
 // Get score for question
 app.get('/master/score/:number', game.sendScoreForQuestion);
 

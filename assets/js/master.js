@@ -96,6 +96,15 @@ $('#show-result').on('click', function () {
          });
 });
 
+$('#next-state').on('click', function () {
+  $.ajax({ url: '/master/next-state'
+         , type: 'POST'
+         , data: {}
+         , dataType: 'json'
+         , contentType: 'application/json'
+         });
+});
+
 
 
 

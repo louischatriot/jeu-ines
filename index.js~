@@ -23,6 +23,9 @@ app.post('/master/next-question', game.beginNextQuestion);
 // Hold game
 app.post('/master/hold', game.hold);
 
+// Show question results
+app.post('/master/show-result', game.showResult);
+
 // Get score for question
 app.get('/master/score/:number', game.sendScoreForQuestion);
 

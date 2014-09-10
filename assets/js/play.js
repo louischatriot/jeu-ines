@@ -220,14 +220,24 @@ actions['RESET'] = function () {
 actions['ENDED'] = function (data) {
   var templateData = {}
     , i, score = 0
+    , percent
     ;
 
   for (i = 1; i <= data.questionsCount; i += 1) {
     if (isMyAnswerCorrect(i)) { score += 1; }
   }
+  percent = score / data.questionsCount;
 
   templateData.score = score;
   templateData.maxScore = data.questionsCount;
+
+  if (percent === 0) { templateData.message = "Wow, aucun point! Qu'est ce que vous faites à ce mariage???"; }
+  if (percent > 0) { templateData.message = "Pas top tout ça, vous devez être un invité de Florian"; }
+  if (percent > 0.3) { templateData.message = "Pas mal, on enlève les moufles à la prochaine partie"; }
+  if (percent > 0.6) { templateData.message = "Un vrai pote! C'est plutôt rare ..."; }
+  if (percent > 0.9) { templateData.message = "Un ami d'enfance, chapeau!"; }
+  if (percent === 1) { templateData.message = "Inès, lâche ce téléphone."; }
+
   $('#display-pannel').html(Mustache.render($('#game-ended').html(), templateData));
 };
 
