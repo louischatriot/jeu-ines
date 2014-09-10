@@ -13,6 +13,17 @@ function updateQuestionTitle () {
 }
 
 
+function displayImage (url) {
+  var $pic = $('<img src="' + url + '">')
+  $pic.css('height', $('#image').height() + 'px')
+  removeImage();
+  $('#image').html($pic);
+}
+
+function removeImage () {
+  $('#image').html('');
+}
+
 // Changing state of one or several cartridge, between unselected, selected, good and bad
 function changeCartridgeDisplay ($cartridge, prefix, letterColor, textColor) {
   $cartridge.find('.letter').css('color', letterColor);
@@ -153,11 +164,6 @@ $('#next-state').on('click', function () {
 
 // Initialization
 updateQuestionTitle();
-
-var $pic = $('<img src="/assets/img/left.png">')
-$pic.css('height', $('#image').height() + 'px')
-
-$('#image').html($pic);
 
 
 
