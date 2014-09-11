@@ -198,6 +198,15 @@ $('#next-state').on('click', function () {
          });
 });
 
+$('#previous-state').on('click', function () {
+  $.ajax({ url: '/master/previous-state'
+         , type: 'POST'
+         , data: {}
+         , dataType: 'json'
+         , contentType: 'application/json'
+         });
+});
+
 
 
 

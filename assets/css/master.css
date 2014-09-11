@@ -32,6 +32,26 @@
   margin-left: 35px;
 }
 
+#previous-state {
+  position: fixed;
+  width:  100px;
+  height: 100px;
+  top: 0px;
+  left: 0px;
+  background-color: lightgrey;
+  cursor: pointer;
+}
+
+.arrow-left {
+	width: 0; 
+	height: 0; 
+	border-top: 40px solid transparent;
+	border-bottom: 40px solid transparent;
+	border-right: 40px solid grey;
+  margin-top: 10px;
+  margin-left: 25px;
+}
+
 #image {
   position: fixed;
   top: 150px;
