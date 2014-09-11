@@ -62,6 +62,41 @@ actions['QUESTION_ASKED'] = function (data) {
 };
 
 
+actions['HOLD'] = function (data) {
+  if (!currentQuestion) {
+    currentQuestion = data.currentQuestion;
+    actions['QUESTION_ASKED'](data);
+  }
+
+  // Get the score for the current question if there is one
+  $.ajax({ url: '/master/score/' + currentQuestion.number
+         , complete: function (jqXHR) {
+            var results = JSON.parse(jqXHR.response)
+              , total
+              ;
+
+            total = results.A + results.B + results.C + results.D;
+            if (total === 0) {
+              results.A += 1;
+              results.B += 1;
+              results.C += 1;
+              results.D += 1;
+              total += 4;
+            }
+
+            results.A = Math.round(1000 * results.A / total) / 10;
+            results.B = Math.round(1000 * results.B / total) / 10;
+            results.C = Math.round(1000 * results.C / total) / 10;
+            results.D = Math.round(1000 * results.D / total) / 10;
+
+            ['A', 'B', 'C', 'D'].forEach(function (letter) {
+              $('.answer-' + letter + ' .result').html(results[letter] + '%  ');
+            });
+         }
+         });
+};
+
+
 actions['SHOW_RESULT'] = function (data) {
   changeToCorrect($('.valid'));
 };
@@ -128,15 +163,6 @@ $('#hold').on('click', function () {
          , data: {}
          , dataType: 'json'
          , contentType: 'application/json'
-         });
-
-  // Get the score for the current question if there is one
-  $.ajax({ url: '/master/score/' + currentQuestion.number
-         , complete: function (jqXHR) {
-            var results = JSON.parse(jqXHR.response);
-            console.log('------------------');
-            console.log(results);
-         }
          });
 });
 

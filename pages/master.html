@@ -16,22 +16,17 @@
 
 <br><br>
 
-<input type="button" value="Repartir au début" id="reset-game"><br><br>
-<input type="button" value="Question suivante" id="next-question"><br><br>
-<input type="button" value="C'était notre dernier mot" id="hold"><br><br>
-<input type="button" value="Montrer les résultats" id="show-result"><br><br><br><br>
+<input type="button" value="Repartir au début" id="reset-game"><br>
+<input type="button" value="Question suivante" id="next-question"><br>
+<input type="button" value="C'était notre dernier mot" id="hold"><br>
+<input type="button" value="Montrer les résultats" id="show-result">
 
 
 
 
-<br><br><br><br>
 
-<div id="results">
-</div>
 
-<div id="answers">
-
-</div>
+<div id="answers"></div>
 
 
 
@@ -43,7 +38,7 @@
       <div class="cartridge-center">
         <div class="table">
           <div class="cartridge-center-inner">
-            <span class="letter">{{letter}} : </span><span class="text">{{text}}</span>
+            <span class="letter"><span class="result"></span>{{letter}} : </span><span class="text">{{text}}</span>
           </div>
         </div>
       </div>
@@ -57,7 +52,7 @@
       <div class="cartridge-center">
         <div class="table">
           <div class="cartridge-center-inner">
-            <span class="letter">{{letter}} : </span><span class="text">{{text}}</span>
+            <span class="letter"><span class="result"></span>{{letter}} : </span><span class="text">{{text}}</span>
           </div>
         </div>
       </div>
