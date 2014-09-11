@@ -59,6 +59,10 @@ actions['QUESTION_ASKED'] = function (data) {
   templateData.answersSecondRow = answersSecondRow;
 
   $('#answers').html(Mustache.render($('#answers-section').html(), templateData));
+
+  if (currentQuestion.photoQuestionAsked && typeof currentQuestion.photoQuestionAsked === 'string' && currentQuestion.photoQuestionAsked.length > 0) {
+    displayImage('/assets/img/' + currentQuestion.photoQuestionAsked);
+  }
 };
 
 
@@ -66,6 +70,10 @@ actions['HOLD'] = function (data) {
   if (!currentQuestion) {
     currentQuestion = data.currentQuestion;
     actions['QUESTION_ASKED'](data);
+  }
+
+  if (currentQuestion.photoQuestionAsked && typeof currentQuestion.photoQuestionAsked === 'string' && currentQuestion.photoQuestionAsked.length > 0) {
+    displayImage('/assets/img/' + currentQuestion.photoQuestionAsked);
   }
 
   // Get the score for the current question if there is one
@@ -99,6 +107,10 @@ actions['HOLD'] = function (data) {
 
 actions['SHOW_RESULT'] = function (data) {
   changeToCorrect($('.valid'));
+
+  if (currentQuestion.photoShowResult && typeof currentQuestion.photoShowResult === 'string' && currentQuestion.photoShowResult.length > 0) {
+    displayImage('/assets/img/' + currentQuestion.photoShowResult);
+  }
 };
 
 
@@ -125,6 +137,7 @@ socket.on('game.status', function (data) {
   console.log("INFO - Received new status");
   console.log(data);
   currentStatus = data.currentStatus;
+  removeImage();
   if (actions[data.currentStatus]) { actions[data.currentStatus](data); }
   updateQuestionTitle();
 });

@@ -9,6 +9,9 @@ $('#create-question').on('submit', function (event) {
                  , answerBValid: $('#answer-b-valid').is(':checked')
                  , answerCValid: $('#answer-c-valid').is(':checked')
                  , answerDValid: $('#answer-d-valid').is(':checked')
+
+                 , photoQuestionAsked: $('#photo-question-asked').val()
+                 , photoShowResult: $('#photo-show-result').val()
                  };
 
   event.preventDefault();
@@ -23,7 +26,7 @@ $('#create-question').on('submit', function (event) {
               $('#feedback').attr('class', 'message-ok');
               $('#feedback').css('display', 'block');
               $('#feedback').html("La question a bien été rajoutée");
-              ['#question', '#answer-a', '#answer-b', '#answer-c', '#answer-d'].forEach(function (id) {
+              ['#question', '#answer-a', '#answer-b', '#answer-c', '#answer-d', '#photo-question-asked', '#photo-show-result'].forEach(function (id) {
                 $(id).val("");
               });
               ['#answer-a-valid', '#answer-b-valid', '#answer-c-valid', '#answer-d-valid'].forEach(function (id) {
