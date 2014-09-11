@@ -8,6 +8,16 @@
   position: fixed;
   width: 70%;
   left: 15%;
+  top: 20px;
+  text-align: center;
+  font-size: 32px;
+}
+
+#results {
+  position: fixed;
+  width: 70%;
+  left: 15%;
+  top: 200px;
   text-align: center;
   font-size: 32px;
 }

@@ -16,6 +16,7 @@ app.get('/master', function (req, res) {
 
 // Reset game
 app.post('/master/reset-game', game.resetGame);
+app.get('/master/reset-game', game.resetGame);
 
 // Next question
 app.post('/master/next-question', game.beginNextQuestion);

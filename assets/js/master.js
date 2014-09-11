@@ -5,10 +5,15 @@
   ;
 
 function updateQuestionTitle () {
+  if (currentStatus === 'ENDED') {
+    $('#title').html('Fin des courses!');
+    return;
+  }
+
   if (currentQuestion) {
     $('#title').html('Q' + currentQuestion.number + ' - ' + currentQuestion.question);
   } else {
-    $('#title').html('Le jeu va bientôt commencer');
+    $('#title').html('Le jeu va bientôt commencer!<br><br>Allez sur <b>jeuines.com</b>');
   }
 }
 
@@ -126,6 +131,20 @@ actions['RESET'] = function (data) {
 };
 
 
+actions['ENDED'] = function (data) {
+  currentQuestion = null;
+  $('#answers').html('');
+  $.ajax({ url: '/master/highest-score'
+         , complete: function (jqXHR) {
+            var results = JSON.parse(jqXHR.response)
+              , message = 'Meilleur score: <span style="font-size: 48px; color: gold; font-weight: bold;">' + results.highestScore + '</span>/' + data.questionsCount
+              ;
+
+            $('#results').html(message);
+         }
+  });
+};
+
 
 
 
@@ -138,6 +157,7 @@ socket.on('game.status', function (data) {
   console.log(data);
   currentStatus = data.currentStatus;
   removeImage();
+  $('#results').html('');
   if (actions[data.currentStatus]) { actions[data.currentStatus](data); }
   updateQuestionTitle();
 });
