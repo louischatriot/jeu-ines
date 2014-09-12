@@ -169,64 +169,75 @@ socket.on('game.status', function (data) {
 
 
 // Control game
-$('#reset-game').on('click', function () {
-  $.ajax({ url: '/master/reset-game'
-         , type: 'POST'
-         , data: {}
-         , dataType: 'json'
-         , contentType: 'application/json'
-         });
-});
+//$('#reset-game').on('click', function () {
+  //$.ajax({ url: '/master/reset-game'
+         //, type: 'POST'
+         //, data: {}
+         //, dataType: 'json'
+         //, contentType: 'application/json'
+         //});
+//});
 
 
-$('#next-question').on('click', function () {
-  $.ajax({ url: '/master/next-question'
-         , type: 'POST'
-         , data: {}
-         , dataType: 'json'
-         , contentType: 'application/json'
-         });
-});
+//$('#next-question').on('click', function () {
+  //$.ajax({ url: '/master/next-question'
+         //, type: 'POST'
+         //, data: {}
+         //, dataType: 'json'
+         //, contentType: 'application/json'
+         //});
+//});
 
 
-$('#hold').on('click', function () {
-  // Hold the game for all players
-  $.ajax({ url: '/master/hold'
-         , type: 'POST'
-         , data: {}
-         , dataType: 'json'
-         , contentType: 'application/json'
-         });
-});
+//$('#hold').on('click', function () {
+  //// Hold the game for all players
+  //$.ajax({ url: '/master/hold'
+         //, type: 'POST'
+         //, data: {}
+         //, dataType: 'json'
+         //, contentType: 'application/json'
+         //});
+//});
 
 
-$('#show-result').on('click', function () {
-  $.ajax({ url: '/master/show-result'
-         , type: 'POST'
-         , data: {}
-         , dataType: 'json'
-         , contentType: 'application/json'
-         });
-});
+//$('#show-result').on('click', function () {
+  //$.ajax({ url: '/master/show-result'
+         //, type: 'POST'
+         //, data: {}
+         //, dataType: 'json'
+         //, contentType: 'application/json'
+         //});
+//});
 
-$('#next-state').on('click', function () {
+
+function nextState () {
   $.ajax({ url: '/master/next-state'
          , type: 'POST'
          , data: {}
          , dataType: 'json'
          , contentType: 'application/json'
          });
-});
+}
 
-$('#previous-state').on('click', function () {
+function previousState () {
   $.ajax({ url: '/master/previous-state'
          , type: 'POST'
          , data: {}
          , dataType: 'json'
          , contentType: 'application/json'
          });
-});
+}
 
+$('#next-state').on('click', nextState);
+$('#previous-state').on('click', previousState);
+$(document).on('keydown', function (event) {
+  if (event.keyCode === 37) {
+    previousState();
+  }
+  if (event.keyCode === 39) {
+    nextState();
+  }
+});
 
 
 
