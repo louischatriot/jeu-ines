@@ -122,6 +122,7 @@ actions['SHOW_RESULT'] = function (data) {
 actions['NOT_STARTED'] = function (data) {
   currentQuestion = null;
   $('#answers').html('');
+  displayImage('/assets/img/qvgdm.png');
 };
 
 
